@@ -10,7 +10,8 @@
             color: #333;
             text-align: center;
             padding: 20px;
-            overflow: hidden;
+            overflow-y: auto; /* מאפשר גלילה */
+            height: 100vh;
         }
         .container {
             background-color: #ffffff;
@@ -101,7 +102,11 @@
     </div>
 
     <script>
+        let confettiActive = true; // משתנה שיקבע מתי להפסיק את הקונפטי
+
         function createHeart() {
+            if (!confettiActive) return; // מפסיק ליצור לבבות אחרי 4 שניות
+
             const heart = document.createElement("div");
             heart.innerHTML = "❤️";
             heart.classList.add("heart");
@@ -117,7 +122,13 @@
             }, 5000);
         }
 
-        setInterval(createHeart, 200);
+        const confettiInterval = setInterval(createHeart, 200);
+
+        // מפסיק את הקונפטי אחרי 4 שניות
+        setTimeout(() => {
+            confettiActive = false;
+            clearInterval(confettiInterval);
+        }, 4000);
     </script>
 </body>
 </html>
